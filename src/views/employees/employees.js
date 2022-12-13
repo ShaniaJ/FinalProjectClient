@@ -1,48 +1,49 @@
 import React from 'react';
-import './tasks.css';
+import './employees.css';
 import {Button, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
-import {Clear, Task} from "@mui/icons-material";
+import {Clear, Person} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {store} from "../../state/store";
-import {CREATE_TASK, UPDATE_TASK} from "../../actions";
+import {CREATE_EMPLOYEE, UPDATE_EMPLOYEE} from "../../actions";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
-import {deleteTask} from "../../api/api";
+import {deleteEmployee} from "../../api/api";
 import Footer from "../components/footer";
 import NavBar from "../components/navbar";
 
 const theme = createTheme();
 
-const Tasks = () => {
 
-    const tasks = useSelector((state) => state.tasks);
+const Employees = () => {
 
-    const updateTask = (id) => {
-        const task = tasks.filter((task) => task.id === id).pop()
-        if (task) {
-            store.dispatch({
-                type: UPDATE_TASK,
-                task: task
-            })
-        }
-    };
+    const employees = useSelector((state) => state.employees);
 
     const create = () => {
         store.dispatch({
-            type: CREATE_TASK,
+            type: CREATE_EMPLOYEE,
             employee: undefined
         })
+    };
+
+    const updateEmployee = (id) => {
+        const employee = employees.filter((employee) => employee.id === id).pop()
+        if (employee) {
+            store.dispatch({
+                type: UPDATE_EMPLOYEE,
+                employee: employee
+            })
+        }
     };
 
     return (
         <div className="tasks">
             <ThemeProvider theme={theme}>
-                <NavBar props={['HOME', 'EMPLOYEES']}></NavBar>
+                <NavBar props={['HOME', 'TASKS']}></NavBar>
                 <Container component="main" maxWidth="xl" className="task">
                     <CssBaseline/>
                     <Box
@@ -56,29 +57,30 @@ const Tasks = () => {
                         }}
                     >
                         <Typography component="h1" variant="h5">
-                            LIST OF TASKS
+                            LIST OF EMPLOYEES
                         </Typography>
 
                         <List>
-                            {tasks.map((task) => {
-                                const labelId = `checkbox-list-label-${task.id}`;
-                                const taskLink = `/task/${task.id}`;
+                            {employees.map((employee) => {
+                                const labelId = `checkbox-list-label-${employee.id}`;
+                                const employeeLink = `/employee/${employee.id}`;
                                 return (
-                                    <Box sx={{mt: 1}} key={task.id}>
-                                        <ListItem key={task.id} disablePadding>
-                                            <Link onClick={() => updateTask(task.id)} to={taskLink}
+                                    <Box sx={{mt: 1}} key={employee.id}>
+                                        <ListItem key={employee.id} disablePadding>
+                                            <Link onClick={() => updateEmployee(employee.id)} to={employeeLink}
                                                   style={{textDecoration: 'none', color: '#000'}}>
                                                 <ListItemButton>
                                                     <ListItemIcon>
-                                                        <Task
+                                                        <Person
                                                             edge="start"
                                                             tabIndex={-1}
                                                         />
                                                     </ListItemIcon>
-                                                    <ListItemText id={labelId} primary={`${task.description}`}/>
+                                                    <ListItemText id={labelId}
+                                                                  primary={`${employee.firstName} ${employee.lastName}`}/>
                                                 </ListItemButton>
                                             </Link>
-                                            <Button onClick={() => deleteTask(task.id)}
+                                            <Button onClick={() => deleteEmployee(employee.id)}
                                                     style={{textDecoration: 'none', color: '#000'}}>
                                                 <ListItemIcon>
                                                     <Clear
@@ -92,9 +94,9 @@ const Tasks = () => {
                                 );
                             })}
                         </List>
-                        <Link onClick={() => create()} to={'/task/'}
+                        <Link onClick={() => create()} to={'/employee/'}
                               style={{textDecoration: 'none', color: '#000'}}>
-                            CREATE TASK
+                            CREATE EMPLOYEE
                         </Link>
                     </Box>
                 </Container>
@@ -104,4 +106,4 @@ const Tasks = () => {
     );
 }
 
-export default Tasks;
+export default Employees;

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './task.css';
-import {connect, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {Button, Checkbox, FormControl, Input, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import AssignmentTurnedIn from '@mui/icons-material/AssignmentTurnedIn';
-import {updateTask} from "../../api/api";
+import {createTask, updateTask} from "../../api/api";
+import Footer from "../components/footer";
+import NavBar from "../components/navbar";
 
 
 const theme = createTheme();
@@ -41,18 +43,28 @@ const Task = () => {
 
     const submit = (event) => {
         event.preventDefault();
-        const updateParams = {
-            id: task.id,
-            description: description,
-            EmployeeId: Object.keys(employee).length === 0 ? null : employee.id,
-            completionStatus: completionStatus,
-            priorityLevel: priorityLevel
-        };
-        updateTask(updateParams);
+        if (Object.keys(task).length === 0) {
+            createTask({
+                description: description,
+                EmployeeId: Object.keys(employee).length === 0 ? null : employee.id,
+                completionStatus: completionStatus,
+                priorityLevel: priorityLevel
+            });
+        } else {
+            updateTask({
+                id: task.id,
+                description: description,
+                EmployeeId: Object.keys(employee).length === 0 ? null : employee.id,
+                completionStatus: completionStatus,
+                priorityLevel: priorityLevel
+            });
+        }
+
     }
 
     return (
         <ThemeProvider theme={theme}>
+            <NavBar props={['HOME', 'EMPLOYEES', 'TASKS']}></NavBar>
             <Container component="main" maxWidth="xs" className="task">
                 <CssBaseline/>
                 <Box
@@ -71,39 +83,40 @@ const Task = () => {
                     </Typography>
                     <Box component="form" onSubmit={submit} noValidate sx={{mt: 1}}>
                         <FormControl sx={{m: 1, width: 400}}>
-                            <InputLabel id="description-label">Description</InputLabel>
+                            <InputLabel id="description-label" shrink={true}>Description</InputLabel>
                             <Input
                                 id="description-input"
                                 value={description}
                                 onChange={(event) => setDescription(event.target.value)}/>
                         </FormControl>
                         <FormControl sx={{m: 1, width: 400}}>
-                            <InputLabel id="priority-label">Priority</InputLabel>
+                            <InputLabel id="priority-label" shrink={true}>Priority</InputLabel>
                             <Input
                                 id="priority-input"
                                 value={priorityLevel}
                                 onChange={(event) => setPriorityLevel(event.target.value)}/>
                         </FormControl>
                         <FormControl sx={{m: 1, width: 200}}>
-                            <InputLabel id="status-label">Status</InputLabel>
+                            <InputLabel id="status-label" shrink={true}>Status</InputLabel>
                             <Checkbox
                                 checked={completionStatus} onChange={(event) => {
                                 setCompletionStatus(event.target.checked)
                             }}/>
                         </FormControl>
                         <FormControl sx={{m: 1, width: 400}}>
-                            <InputLabel id="employee-label">Employee</InputLabel>
+                            <InputLabel id="employee-label" shrink={true}>Employee</InputLabel>
                             <Select
                                 labelId="employee-label"
-                                id="employee"
+                                id="employee-select"
                                 onChange={(event) => {
-                                    setEmployee(event.target.value || {})
+                                    setEmployee(event.target.value)
                                 }}
-                                value={employee}
+                                displayEmpty
+                                value={employee ?? ''}
                                 input={<OutlinedInput label="Employee"/>}
                             >
                                 <MenuItem value="">
-                                    <em>None</em>
+                                    <em>Unassigned</em>
                                 </MenuItem>
                                 {employees.map((employee) => (
                                     <MenuItem
@@ -120,21 +133,14 @@ const Task = () => {
                             variant="contained"
                             sx={{m: 1, width: 400}}
                         >
-                            Update
+                            {Object.keys(task).length === 0 ? 'CREATE' : 'UPDATE'}
                         </Button>
                     </Box>
                 </Box>
             </Container>
+            <Footer></Footer>
         </ThemeProvider>
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        tasks: state.tasks,
-        task: state.task,
-        employees: state.employees
-    }
-}
-
-export default connect(mapStateToProps)(Task);
+export default Task;

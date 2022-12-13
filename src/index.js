@@ -7,6 +7,9 @@ import './index.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Task from "./views/task/task";
 import {getEmployees, getTasks} from "./api/api";
+import Employees from "./views/employees/employees";
+import Employee from "./views/employee/employee";
+import Home from "./views/home/home";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -19,9 +22,13 @@ root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Tasks/>}/>
+                    <Route path="/" element={<Home/>}/>
                     <Route path="/tasks" element={<Tasks/>}/>
                     <Route path="task/:id" element={<Task/>}/>
+                    <Route path="task/" element={<Task/>}/>
+                    <Route path="/employees" element={<Employees/>}/>
+                    <Route path="employee/:id" element={<Employee/>}/>
+                    <Route path="employee/" element={<Employee/>}/>
                 </Routes>
             </BrowserRouter>
         </Provider>
