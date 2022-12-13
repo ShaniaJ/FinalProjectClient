@@ -1,3 +1,8 @@
 export const GET_TASKS = 'GET_TASKS';
 export const GET_EMPLOYEES = 'GET_EMPLOYEES';
+export const CREATE_TASK = 'CREATE_TASK';
+export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
+export const DELETE_TASK = 'DELETE_TASK';
+export const DELETE_EMPLOYEE = 'DELETE_EMPLOYEE';
 export const UPDATE_TASK = 'UPDATE_TASK';
+export const UPDATE_EMPLOYEE = 'UPDATE_EMPLOYEE';
