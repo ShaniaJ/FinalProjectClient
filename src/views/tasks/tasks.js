@@ -42,7 +42,7 @@ const Tasks = () => {
     return (
         <div className="tasks">
             <ThemeProvider theme={theme}>
-                <NavBar props={['HOME', 'EMPLOYEES']}></NavBar>
+                <NavBar ></NavBar>
                 <Container component="main" maxWidth="xl" className="task">
                     <CssBaseline/>
                     <Box
@@ -92,10 +92,28 @@ const Tasks = () => {
                                 );
                             })}
                         </List>
-                        <Link onClick={() => create()} to={'/task/'}
-                              style={{textDecoration: 'none', color: '#000'}}>
-                            CREATE TASK
-                        </Link>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            marginLeft: 8,
+                            marginRight: 10,
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}
+                    >
+
+                        <div  style={{justifyContent: 'right'}}>
+                            <Link onClick={() => create()} to={'/task/'}
+                                  style={{textDecoration: 'none', color: '#FFF'}}>
+                                <Button variant="contained">
+                                    CREATE NEW TASK
+                                </Button>
+                            </Link>
+
+                        </div>
+
                     </Box>
                 </Container>
                 <Footer></Footer>

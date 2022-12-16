@@ -43,7 +43,7 @@ const Employees = () => {
     return (
         <div className="tasks">
             <ThemeProvider theme={theme}>
-                <NavBar props={['HOME', 'TASKS']}></NavBar>
+                <NavBar ></NavBar>
                 <Container component="main" maxWidth="xl" className="task">
                     <CssBaseline/>
                     <Box
@@ -94,10 +94,26 @@ const Employees = () => {
                                 );
                             })}
                         </List>
+
+                    </Box>
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            marginLeft: 8,
+                            marginRight: 10,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-end',
+                        }}
+                    >
+
                         <Link onClick={() => create()} to={'/employee/'}
                               style={{textDecoration: 'none', color: '#000'}}>
-                            CREATE EMPLOYEE
+                            <Button variant="contained">
+                            CREATE NEW EMPLOYEE
+                            </Button>
                         </Link>
+
                     </Box>
                 </Container>
                 <Footer></Footer>

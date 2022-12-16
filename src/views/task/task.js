@@ -64,7 +64,7 @@ const Task = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <NavBar props={['HOME', 'EMPLOYEES', 'TASKS']}></NavBar>
+            <NavBar ></NavBar>
             <Container component="main" maxWidth="xs" className="task">
                 <CssBaseline/>
                 <Box
@@ -75,7 +75,7 @@ const Task = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                    <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>
                         <AssignmentTurnedIn/>
                     </Avatar>
                     <Typography component="h1" variant="h5">

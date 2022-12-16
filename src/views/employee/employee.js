@@ -56,7 +56,7 @@ const Employee = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <NavBar props={['HOME', 'EMPLOYEES', 'TASKS']}></NavBar>
+            <NavBar></NavBar>
             <Container component="main" maxWidth="xs" className="employee">
                 <CssBaseline/>
                 <Box
@@ -67,7 +67,7 @@ const Employee = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                    <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>
                         <Person/>
                     </Avatar>
                     <Typography component="h1" variant="h5">

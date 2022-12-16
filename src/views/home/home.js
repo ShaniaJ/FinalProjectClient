@@ -2,7 +2,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import {TextField} from "@mui/material";
 import Footer from "../components/footer";
 import NavBar from "../components/navbar";
 
@@ -13,7 +12,7 @@ const Home = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <NavBar props={['EMPLOYEES', 'TASKS']}></NavBar>
+            <NavBar></NavBar>
             <Container component="main" maxWidth="xs" className="task">
                 <CssBaseline/>
                 <Box
